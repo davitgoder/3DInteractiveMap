@@ -43,6 +43,29 @@
 
 
 <body>
+
+	<script>
+		window.fbAsyncInit = function () {
+			FB.init({
+				appId: '516400212174661',
+				xfbml: true,
+				version: 'v3.2'
+			});
+			FB.AppEvents.logPageView();
+
+			readJSON("build/data.json");// initilze trees
+		};
+
+		(function (d, s, id) {
+			var js, fjs = d.getElementsByTagName(s)[0];
+			if (d.getElementById(id)) { return; }
+			js = d.createElement(s); js.id = id;
+			js.src = "https://connect.facebook.net/en_US/sdk.js";
+			fjs.parentNode.insertBefore(js, fjs);
+		}(document, 'script', 'facebook-jssdk'));
+	</script>
+
+
 	<script src="./libs/jquery/jquery-3.1.1.min.js"></script>
 	<script src="./libs/spectrum/spectrum.js"></script>
 	<script src="./libs/perfect-scrollbar/js/perfect-scrollbar.jquery.js"></script>
@@ -97,10 +120,11 @@
 
 		<div id="pin_image" , class="shcreensh">
 
+			<div class="fb-share-button" data-href="https://davitgoder.github.io/davitgoder.git.io/" data-layout="button_count"
+			 data-size="small" data-mobile-iframe="true"><a target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=https%3A%2F%2Fdavitgoder.github.io%2Fdavitgoder.git.io%2F&amp;src=sdkpreparse"
+				 class="fb-xfbml-parse-ignore">გაზიარება</a></div>
 			<div id="current_image">
-
 				<img id='my_image' src='resources/images/ee.jpg' alt='image' width="auto" height="180" />
-
 				<img id='my_image' src='resources/images/Facebook.png' alt='image' width="auto" height="40" onclick="publishOnFacebook(this) " />
 				<img id='my_image' src='resources/images/Twitter.png' alt='image' width="auto" height="40" onclick="twitt_click(this)" />
 				<div id="Name" style="position: relative; width: 100%; height: 100%; left: 25px; top: -72px;"></div>
@@ -115,17 +139,6 @@
 
 		<script>
 
-			window.fbAsyncInit = function () {
-				FB.init({
-					appId: '1986352534789840',
-					autoLogAppEvents: true,
-					xfbml: true,
-					version: 'v3.2'
-				});
-				readJSON("build/data.json");// initilze trees
-				console.log("url:  ", document.URL);
-				this.get_url();
-			};
 
 
 			function get_url() {
