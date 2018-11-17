@@ -62,20 +62,10 @@
 	<script src="./libs/other/PLYLoader.js"></script>
 	<script src="https://code.jquery.com/jquery-2.1.0.min.js"></script>
 
-
-
-
-
-	<!-- INCLUDE ADDITIONAL DEPENDENCIES HERE -->
-	<!-- INCLUDE SETTINGS HERE -->
-
 	<div class="potree_container" style="position: absolute; width: 100%; height: 100%; left: 0px; top: 0px; ">
 		<div id="potree_render_area"></div>
 		<!-- <div id="potree_sidebar_container" style="position:absolute; right:100; top:100"> </div> -->
 	</div>
-
-
-
 
 	<style>
 		input[type=text] {
@@ -111,11 +101,10 @@
 
 				<img id='my_image' src='resources/images/ee.jpg' alt='image' width="auto" height="180" />
 
-				<img id='my_image' src='resources/images/facebook.png' alt='image' width="auto" height="40" onclick="fbs_click(this) " />
-				<img id='my_image' src='resources/images/twitter.png' alt='image' width="auto" height="40" onclick="twitt_click(this)" />
+				<img id='my_image' src='resources/images/Facebook.png' alt='image' width="auto" height="40" onclick="publishOnFacebook(this) " />
+				<img id='my_image' src='resources/images/Twitter.png' alt='image' width="auto" height="40" onclick="twitt_click(this)" />
 				<div id="Name" style="position: relative; width: 100%; height: 100%; left: 25px; top: -72px;"></div>
 				<div id="Date" style="position: relative; width: 100%; height: 100%; left: 220px; top: -134px;"></div>
-
 
 			</div>
 
@@ -230,7 +219,7 @@
 			var image_url;
 
 			function screenshot() { // take shortcut
-
+				console.log("screenshot1");
 				html2canvas(document.querySelector("#pin_image"), {
 					onrendered: function (canvas) {
 						let pngUrl = canvas.toDataURL();
@@ -238,7 +227,8 @@
 						img.src = pngUrl;
 						image_url = pngUrl;
 						let image = convertURIToImageData(pngUrl);
-						publishOnFacebook(pngUrl);
+						//fbs_click(image_url);
+						publishOnFacebook(image);
 						console.log("image : ", pngUrl);
 						//ავტვირთოთ ბაზაზე და ისე გავაზიაროთ? ფეისბუქი მარტო ლინკს იღებს
 					},
@@ -249,15 +239,18 @@
 
 			pin_image.style.right = "-302px";
 
-			function fbs_click(TheImg) {
-				this.screenshot();
+			// function fbs_click(TheImg) {
+			// 	console.log("fbs_click1");
+			// 	var image = document.getElementsByName("#pin_image");
+			// 	// u = TheImg.src;
+			// 	// t = document.title;
+			// 	// t = TheImg.getAttribute('alt');
+			// 	u = image.src;
+			// 	t = document.title;
+			// 	t = image.getAttribute('alt');
+			// 	window.open('http://www.facebook.com/sharer.php?u=' + encodeURIComponent(u) + '&t=' + encodeURIComponent(t), 'sharer', 'toolbar=0,status=0,width=626,height=436'); return false;
 
-				u = TheImg.src;
-				t = document.title;
-				t = TheImg.getAttribute('alt');
-				window.open('http://www.facebook.com/sharer.php?u=' + encodeURIComponent(u) + '&t=' + encodeURIComponent(t), 'sharer', 'toolbar=0,status=0,width=626,height=436'); return false;
-
-			}
+			// }
 
 
 			function publishOnFacebook(share_image) {
@@ -266,7 +259,7 @@
 						method: 'feed',
 						name: 'Facebook Dialogs',
 						link: 'http://localhost/',
-						picture: share_image,
+						picture: "https://en.wikipedia.org/wiki/Tree#/media/File:Ash_Tree_-_geograph.org.uk_-_590710.jpg",
 						caption: 'Reference Documentation',
 						description: 'Dialogs provide a simple, consistent interface for applications to interface with users.'
 					},
