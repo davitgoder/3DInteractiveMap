@@ -99,7 +99,7 @@
 			box-sizing: border-box;
 			border-radius: 10px;
 			font-size: 16px;
-			background-color: rgb(168, 134, 207);
+			background-color: rgb(255, 255, 255);
 			background-image: url("resources/images/Twitter.png");
 			background-position: 10px 10px; 
 			background-repeat: no-repeat;
@@ -197,7 +197,7 @@
 			function go_to_tree(tree_obj) {// _goder
 
 				this.screenshot();
-				
+
 
 				let final_postion = tree_obj.mesh_obj.position;
 				pin_image.style.right = "0px";
@@ -226,14 +226,31 @@
 
 			var image_url;
 
-			var obj = {
+			var publish = {
 				method: 'feed',
-				href: 'https://forum.webflow.com/t/facebook-share-button-doesnt-share-the-correct-image/41119',     // The same than link in feed method
-				title: 'yourtitle',  // The same than name in feed method
-				picture: 'https://blog.mozilla.org/internetcitizen/files/2017/06/2017-06-16_14583.png',
-				caption: 'yourcaption',
-				description: 'yourdescription',
+				message: 'Learning about Facebook Platform',
+				name: 'Operation Developer Love',
+				caption: 'The Facebook Connect JavaScript SDK',
+				description: (
+					'A small JavaScript library that allows you to harness ' +
+					'the power of Facebook, bringing the user\'s identity, ' +
+					'social graph and distribution power to your site.'
+				),
+				link: 'http://fbrell.com/',
+				picture: 'http://fbrell.com/f8.jpg',
+				actions: [
+					{ name: 'fbrell', link: 'http://fbrell.com/' }
+				],
+				properties: [
+					{ text: 'value1', href: 'http://developers.facebook.com/' },
+					{ text: 'value1', href: 'http://developers.facebook.com/' },
+					{ text: 'value1', href: 'http://developers.facebook.com/' },
+					{ text: 'value1', href: 'http://developers.facebook.com/' },
+					{ text: 'value1', href: 'http://developers.facebook.com/' }
+				],
+				user_message_prompt: 'Share your thoughts about RELL'
 			};
+
 
 			function screenshot() { // take shortcut
 
@@ -251,10 +268,7 @@
 
 						document.getElementById("tree_image").src = pngUrl;
 
-
-						FB.ui(obj, function (response) {
-							console.log("posetdbnbbub:   ", response);
-						});
+						FB.ui(publish, Log.info.bind('feed callback'));
 
 						//	post_on_fb(pngUrl);
 						//fbs_click(image_url);
