@@ -45,13 +45,17 @@
 <body>
 
 	<script>
+
 		window.fbAsyncInit = function () {
 			FB.init({
 				appId: '516400212174661',
 				xfbml: true,
-				version: 'v3.2'	
+				version: 'v3.2'
+
 			});
-			FB.AppEvents.logPageView();		
+			FB.AppEvents.logPageView();
+
+
 		};
 
 		(function (d, s, id) {
@@ -94,7 +98,7 @@
 			box-sizing: border-box;
 			border-radius: 10px;
 			font-size: 16px;
-			background-color: white;
+			background-color: green;
 			background-image: url("resources/images/Twitter.png");
 			background-position: 10px 10px; 
 			background-repeat: no-repeat;
@@ -117,15 +121,14 @@
 		</div>
 
 		<div id="pin_image" , class="shcreensh">
-
 			<div class="fb-share-button" data-href="https://davitgoder.github.io/davitgoder.git.io/" data-layout="button_count"
 			 data-size="small" data-mobile-iframe="true"><a target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=https%3A%2F%2Fdavitgoder.github.io%2Fdavitgoder.git.io%2F&amp;src=sdkpreparse"
 				 class="fb-xfbml-parse-ignore">გაზიარება</a></div>
 
 			<div id="current_image">
 				<img id='tree_image' src='resources/images/ee.jpg' alt='image' width="auto" height="180" />
-				<img id='my_image' src='resources/images/Facebook.png' alt='image' width="auto" height="40" onclick="publishOnFacebook(this) " />
-				<img id='my_image' src='resources/images/Twitter.png' alt='image' width="auto" height="40" onclick="twitt_click(this)" />
+				<!-- <img id='my_image' src='resources/images/Facebook.png' alt='image' width="auto" height="40" onclick="publishOnFacebook(this) " />
+				<img id='my_image' src='resources/images/Twitter.png' alt='image' width="auto" height="40" onclick="twitt_click(this)" /> -->
 				<div id="Name" style="position: relative; width: 100%; height: 100%; left: 25px; top: -72px;"></div>
 				<div id="Date" style="position: relative; width: 100%; height: 100%; left: 220px; top: -134px;"></div>
 			</div>
@@ -226,6 +229,7 @@
 
 
 				console.log("screenshot1");
+
 				html2canvas(document.querySelector("#pin_image"), {
 					onrendered: function (canvas) {
 						let pngUrl = canvas.toDataURL();
@@ -236,6 +240,7 @@
 
 						document.getElementById("tree_image").src = pngUrl;
 
+						post_on_fb(pngUrl);
 						//fbs_click(image_url);
 
 						console.log("image : ", pngUrl);
@@ -245,21 +250,105 @@
 				return image_url;
 			}
 
+			function post_on_fb(data) {
+				try {
+					blob = dataURItoBlob(data);
+				} catch (e) {
+					console.log(e);
+				}
+				FB.getLoginStatus(function (response) {
+					console.log("responce: ",response);
+					if (response.status === "connected") {
+						postImageToFacebook(response.authResponse.accessToken, "Canvas to Facebook/Twitter", "image/png", blob, window.location.href);
+					} else if (response.status === "not_authorized") {
+						FB.login(function (response) {
+							postImageToFacebook(response.authResponse.accessToken, "Canvas to Facebook/Twitter", "image/png", blob, window.location.href);
+						}, { scope: "publish_actions" });
+					} else {
+						FB.login(function (response) {
+							postImageToFacebook(response.authResponse.accessToken, "Canvas to Facebook/Twitter", "image/png", blob, window.location.href);
+						}, { scope: "publish_actions" });
+					}
+				});
+			};
+
+
+
+
+			function postImageToFacebook(token, filename, mimeType, imageData, message) {
+				var fd = new FormData();
+				fd.append("access_token", token);
+				fd.append("source", imageData);
+				fd.append("no_story", true);
+
+				// Upload image to facebook without story(post to feed)
+				$.ajax({
+					url: "https://graph.facebook.com/me/photos?access_token=" + token,
+					type: "POST",
+					data: fd,
+					processData: false,
+					contentType: false,
+					cache: false,
+					success: function (data) {
+						console.log("success: ", data);
+
+						// Get image source url
+						FB.api(
+							"/" + data.id + "?fields=images",
+							function (response) {
+								if (response && !response.error) {
+									//console.log(response.images[0].source);
+
+									// Create facebook post using image
+									FB.api(
+										"/me/feed",
+										"POST",
+										{
+											"message": "",
+											"picture": response.images[0].source,
+											"link": window.location.href,
+											"name": 'Look at the cute panda!',
+											"description": message,
+											"privacy": {
+												value: 'SELF'
+											}
+										},
+										function (response) {
+											if (response && !response.error) {
+												/* handle the result */
+												console.log("Posted story to facebook");
+												console.log(response);
+											}
+										}
+									);
+								}
+							}
+						);
+					},
+					error: function (shr, status, data) {
+						console.log("error " + data + " Status " + shr.status);
+					},
+					complete: function (data) {
+						//console.log('Post to facebook Complete');
+					}
+				});
+			}
+
+			function dataURItoBlob(dataURI) {
+				var byteString = atob(dataURI.split(',')[1]);
+				var ab = new ArrayBuffer(byteString.length);
+				var ia = new Uint8Array(ab);
+				for (var i = 0; i < byteString.length; i++) {
+					ia[i] = byteString.charCodeAt(i);
+				}
+				return new Blob([ab], { type: 'image/png' });
+			}
+
+
+
 
 			pin_image.style.right = "-302px";
 
-			// function fbs_click(TheImg) {
-			// 	console.log("fbs_click1");
-			// 	var image = document.getElementsByName("#pin_image");
-			// 	// u = TheImg.src;
-			// 	// t = document.title;
-			// 	// t = TheImg.getAttribute('alt');
-			// 	u = image.src;
-			// 	t = document.title;
-			// 	t = image.getAttribute('alt');
-			// 	window.open('http://www.facebook.com/sharer.php?u=' + encodeURIComponent(u) + '&t=' + encodeURIComponent(t), 'sharer', 'toolbar=0,status=0,width=626,height=436'); return false;
-
-			// }
 
 
 			function publishOnFacebook(share_image) {
