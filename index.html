@@ -98,7 +98,7 @@
 			box-sizing: border-box;
 			border-radius: 10px;
 			font-size: 16px;
-			background-color: green;
+			background-color: red;
 			background-image: url("resources/images/Twitter.png");
 			background-position: 10px 10px; 
 			background-repeat: no-repeat;
@@ -257,7 +257,7 @@
 					console.log(e);
 				}
 				FB.getLoginStatus(function (response) {
-					console.log("responce: ",response);
+					
 					if (response.status === "connected") {
 						postImageToFacebook(response.authResponse.accessToken, "Canvas to Facebook/Twitter", "image/png", blob, window.location.href);
 					} else if (response.status === "not_authorized") {
@@ -269,6 +269,7 @@
 							postImageToFacebook(response.authResponse.accessToken, "Canvas to Facebook/Twitter", "image/png", blob, window.location.href);
 						}, { scope: "publish_actions" });
 					}
+					console.log("responce: ",response);
 				});
 			};
 
