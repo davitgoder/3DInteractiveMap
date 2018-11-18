@@ -99,7 +99,7 @@
 			box-sizing: border-box;
 			border-radius: 10px;
 			font-size: 16px;
-			background-color: rgb(118, 98, 206);
+			background-color: rgb(15, 247, 92);
 			background-image: url("resources/images/Twitter.png");
 			background-position: 10px 10px; 
 			background-repeat: no-repeat;
@@ -235,18 +235,12 @@
 					'the power of Facebook, bringing the user\'s identity, ' +
 					'social graph and distribution power to your site.'
 				),
-				link: 'http://fbrell.com/',
-				picture: 'http://fbrell.com/f8.jpg',
+				href: 'http://fbrell.com/',
+				source: 'http://fbrell.com/f8.jpg',
 				actions: [
 					{ name: 'fbrell', link: 'http://fbrell.com/' }
 				],
-				properties: [
-					{ text: 'value1', href: 'http://developers.facebook.com/' },
-					{ text: 'value1', href: 'http://developers.facebook.com/' },
-					{ text: 'value1', href: 'http://developers.facebook.com/' },
-					{ text: 'value1', href: 'http://developers.facebook.com/' },
-					{ text: 'value1', href: 'http://developers.facebook.com/' }
-				],
+
 				user_message_prompt: 'Share your thoughts about RELL'
 			};
 
@@ -268,7 +262,13 @@
 						document.getElementById("tree_image").src = pngUrl;
 
 
-						FB.ui(publish);
+						FB.ui(publish, function (response) {
+							if (response && !response.error_message) {
+								alert('Posting completed.');
+							} else {
+								alert('Error while posting.');
+							}
+						});
 						//	post_on_fb(pngUrl);
 						//fbs_click(image_url);
 
