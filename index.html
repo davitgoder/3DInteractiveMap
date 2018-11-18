@@ -225,6 +225,14 @@
 
 			var image_url;
 
+			var obj = {
+				method: "feed",
+				picture: "https://blog.mozilla.org/internetcitizen/files/2017/06/2017-06-16_14583.png",
+				name: "My custom bikes!",
+				caption: "I just finished building a new pair of bikes",
+				description: "My configuration: ....."
+			};
+
 			function screenshot() { // take shortcut
 
 
@@ -241,7 +249,12 @@
 
 						document.getElementById("tree_image").src = pngUrl;
 
-						post_on_fb(pngUrl);
+
+						FB.ui(obj, function (response) {
+							console.log("posetdbnbbub:   ", response);
+						});
+
+						//	post_on_fb(pngUrl);
 						//fbs_click(image_url);
 
 						console.log("image : ", pngUrl);
@@ -250,6 +263,15 @@
 				});
 				return image_url;
 			}
+
+
+
+
+
+
+
+
+
 
 			function post_on_fb(data) {
 				try {
