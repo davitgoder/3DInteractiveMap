@@ -99,7 +99,7 @@
 			box-sizing: border-box;
 			border-radius: 10px;
 			font-size: 16px;
-			background-color: rgb(66, 23, 255);
+			background-color: rgb(255, 102, 102);
 			background-image: url("resources/images/Twitter.png");
 			background-position: 10px 10px; 
 			background-repeat: no-repeat;
@@ -226,12 +226,14 @@
 			var image_url;
 
 			var obj = {
-				method: "feed",
-				picture: "https://blog.mozilla.org/internetcitizen/files/2017/06/2017-06-16_14583.png",
-				name: "name4",
-				caption: "I just finished building a new pair of bikes",
-				description: "My configuration: .....",
-				href: "https://forum.webflow.com/t/facebook-share-button-doesnt-share-the-correct-image/41119"
+
+
+				method: 'share',
+				href: 'ttps://forum.webflow.com/t/facebook-share-button-doesnt-share-the-correct-image/41119',     // The same than link in feed method
+				title: 'yourtitle',  // The same than name in feed method
+				picture: 'https://blog.mozilla.org/internetcitizen/files/2017/06/2017-06-16_14583.png',
+				caption: 'yourcaption',
+				description: 'yourdescription',
 			};
 
 			function screenshot() { // take shortcut
