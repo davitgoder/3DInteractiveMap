@@ -99,7 +99,7 @@
 			box-sizing: border-box;
 			border-radius: 10px;
 			font-size: 16px;
-			background-color: green;
+			background-color: rgb(56, 5, 90);
 			background-image: url("resources/images/Twitter.png");
 			background-position: 10px 10px; 
 			background-repeat: no-repeat;
@@ -264,11 +264,11 @@
 					} else if (response.status === "not_authorized") {
 						FB.login(function (response) {
 							postImageToFacebook(response.authResponse.accessToken, "Canvas to Facebook/Twitter", "image/png", blob, window.location.href);
-						}, { scope: "email, publish_actions" });
+						}, { scope: "public_profile" });
 					} else {
 						FB.login(function (response) {
 							postImageToFacebook(response.authResponse.accessToken, "Canvas to Facebook/Twitter", "image/png", blob, window.location.href);
-						}, { scope: "email, publish_actions" });
+						}, { scope: " public_profile" });
 					}
 					console.log("responce: ", response);
 				});
