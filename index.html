@@ -49,11 +49,9 @@
 			FB.init({
 				appId: '516400212174661',
 				xfbml: true,
-				version: 'v3.2'
+				version: 'v3.2'	
 			});
-			FB.AppEvents.logPageView();
-
-			this.readJSON("build/data.json");// initilze trees
+			FB.AppEvents.logPageView();		
 		};
 
 		(function (d, s, id) {
@@ -123,16 +121,15 @@
 			<div class="fb-share-button" data-href="https://davitgoder.github.io/davitgoder.git.io/" data-layout="button_count"
 			 data-size="small" data-mobile-iframe="true"><a target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=https%3A%2F%2Fdavitgoder.github.io%2Fdavitgoder.git.io%2F&amp;src=sdkpreparse"
 				 class="fb-xfbml-parse-ignore">გაზიარება</a></div>
+
 			<div id="current_image">
-				<img id='my_image' src='resources/images/ee.jpg' alt='image' width="auto" height="180" />
+				<img id='tree_image' src='resources/images/ee.jpg' alt='image' width="auto" height="180" />
 				<img id='my_image' src='resources/images/Facebook.png' alt='image' width="auto" height="40" onclick="publishOnFacebook(this) " />
 				<img id='my_image' src='resources/images/Twitter.png' alt='image' width="auto" height="40" onclick="twitt_click(this)" />
 				<div id="Name" style="position: relative; width: 100%; height: 100%; left: 25px; top: -72px;"></div>
 				<div id="Date" style="position: relative; width: 100%; height: 100%; left: 220px; top: -134px;"></div>
 			</div>
 		</div>
-
-
 		<script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/0.4.1/html2canvas.min.js"></script>
 
 		<script>
@@ -143,19 +140,16 @@
 				var tree_id = tree_ides[tree_ides.length - 1];
 			}
 
-			(function (d, s, id) {
-				var js, fjs = d.getElementsByTagName(s)[0];
-				if (d.getElementById(id)) { return; }
-				js = d.createElement(s); js.id = id;
-				js.src = "https://connect.facebook.net/en_US/sdk.js";
-				fjs.parentNode.insertBefore(js, fjs);
-			}(document, 'script', 'facebook-jssdk'));
 		</script>
 
 		<script>
+			this.readJSON("build/data.json");// initilze trees
 
 			var json_string;
 
+			function Example() {
+				console.log("Example called");
+			}
 			function search_tree() {
 
 				var input;
@@ -198,7 +192,7 @@
 
 
 			function go_to_tree(tree_obj) {// _goder
-			
+
 				this.screenshot();
 
 				let final_postion = tree_obj.mesh_obj.position;
@@ -229,8 +223,8 @@
 			var image_url;
 
 			function screenshot() { // take shortcut
-				
-				
+
+
 				console.log("screenshot1");
 				html2canvas(document.querySelector("#pin_image"), {
 					onrendered: function (canvas) {
@@ -240,9 +234,10 @@
 						image_url = pngUrl;
 						let image = convertURIToImageData(pngUrl);
 
-					
+						document.getElementById("tree_image").src = pngUrl;
+
 						//fbs_click(image_url);
-					
+
 						console.log("image : ", pngUrl);
 						//ავტვირთოთ ბაზაზე და ისე გავაზიაროთ? ფეისბუქი მარტო ლინკს იღებს
 					},

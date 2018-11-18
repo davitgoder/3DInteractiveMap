@@ -16196,7 +16196,7 @@ void main() {
 			};
 
 
-			//zoom_to_oject_Mark
+			//zoom_to_oject_Mark _goder
 			let dblclick = (e) => {
 				this.zoomToLocation(e.mouse);
 			};
@@ -16324,7 +16324,7 @@ void main() {
 				let targetPos = cameraTargetPosition.clone();
 				let startRadius = this.scene.view.radius;
 				let targetRadius = cameraTargetPosition.distanceTo(I.location);
-
+console.log(I.location);
 				tween.onUpdate(() => {
 					let t = value.x;
 					this.scene.view.position.x = (1 - t) * startPos.x + t * targetPos.x;
@@ -23297,7 +23297,6 @@ ENDSEC
 
 			let cam = this.viewer.scene.getActiveCamera();
 
-
 			//let image_toggle = false, mouse_down_detector = false; // image apperance constroll
 			document.addEventListener('mousedown', (event) => {
 				mouse_down_detector = true;
@@ -23369,7 +23368,6 @@ ENDSEC
 		//todo: search, tree location based functionality, good facebook share, start from hidden image 
 
 		on_click() {
-
 			if (mouse_down_detector)
 				if (hovered_object != null) {
 					//this.zoom_to_pin(hovered_object.point);
@@ -24281,7 +24279,6 @@ ENDSEC
 		}
 
 		zoomTo(node, factor, animationDuration = 0) {
-
 			let view = this.scene.view;
 
 			let camera = this.scene.cameraP.clone();
