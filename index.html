@@ -99,7 +99,7 @@
 			box-sizing: border-box;
 			border-radius: 10px;
 			font-size: 16px;
-			background-color: rgb(255, 255, 255);
+			background-color: rgb(66, 23, 255);
 			background-image: url("resources/images/Twitter.png");
 			background-position: 10px 10px; 
 			background-repeat: no-repeat;
@@ -198,7 +198,6 @@
 
 				this.screenshot();
 
-
 				let final_postion = tree_obj.mesh_obj.position;
 				pin_image.style.right = "0px";
 				let person_name = document.getElementById("Name");
@@ -268,8 +267,8 @@
 
 						document.getElementById("tree_image").src = pngUrl;
 
-						FB.ui(publish, Log.info.bind('feed callback'));
 
+						FB.ui(publish);
 						//	post_on_fb(pngUrl);
 						//fbs_click(image_url);
 
