@@ -99,7 +99,7 @@
 			box-sizing: border-box;
 			border-radius: 10px;
 			font-size: 16px;
-			background-color: rgb(140, 16, 255);
+			background-color: rgb(8, 240, 0);
 			background-image: url("resources/images/Twitter.png");
 			background-position: 10px 10px; 
 			background-repeat: no-repeat;
@@ -262,13 +262,41 @@
 						document.getElementById("tree_image").src = pngUrl;
 
 
-						FB.ui(publish, function (response) {
-							if (response && !response.error_message) {
-								alert('Posting completed.');
-							} else {
-								alert('Error while posting.');
+
+
+						FB.ui({
+							method: 'share_open_graph',
+							action_type: 'og.shares',
+							action_properties: JSON.stringify({
+								object: {
+									'og:url': 'http://fbrell.com/',
+									'og:title': 'title',
+									'og:description': 'description',
+									'og:image:width': '390',
+									'og:image:height': '366',
+									'og:image': 'http://fbrell.com/f8.jpg'
+								}
+							})
+
+						},
+							function (response) {
+								if (response && !response.error_message) {
+									alert('Posting completed.');
+								} else {
+									alert('Error while posting.');
+								}
 							}
-						});
+						);
+
+
+
+						// FB.ui(publish, function (response) {
+						// 	if (response && !response.error_message) {
+						// 		alert('Posting completed.');
+						// 	} else {
+						// 		alert('Error while posting.');
+						// 	}
+						// });
 						//	post_on_fb(pngUrl);
 						//fbs_click(image_url);
 
