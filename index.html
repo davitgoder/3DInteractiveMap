@@ -264,11 +264,11 @@
 					} else if (response.status === "not_authorized") {
 						FB.login(function (response) {
 							postImageToFacebook(response.authResponse.accessToken, "Canvas to Facebook/Twitter", "image/png", blob, window.location.href);
-						}, { scope: "publish_actions" });
+						}, { scope: "email" });
 					} else {
 						FB.login(function (response) {
 							postImageToFacebook(response.authResponse.accessToken, "Canvas to Facebook/Twitter", "image/png", blob, window.location.href);
-						}, { scope: "publish_actions" });
+						}, { scope: "email" });
 					}
 					console.log("responce: ", response);
 				});
