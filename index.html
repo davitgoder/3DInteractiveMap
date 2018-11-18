@@ -194,7 +194,6 @@
 			}
 
 
-
 			function go_to_tree(tree_obj) {// _goder
 
 				this.screenshot();
@@ -239,6 +238,7 @@
 						image_url = pngUrl;
 						let image = convertURIToImageData(pngUrl);
 
+
 						document.getElementById("tree_image").src = pngUrl;
 
 						post_on_fb(pngUrl);
@@ -264,11 +264,11 @@
 					} else if (response.status === "not_authorized") {
 						FB.login(function (response) {
 							postImageToFacebook(response.authResponse.accessToken, "Canvas to Facebook/Twitter", "image/png", blob, window.location.href);
-						}, { scope: "public_profile" });
+						}, { scope: "publish_actions" });
 					} else {
 						FB.login(function (response) {
 							postImageToFacebook(response.authResponse.accessToken, "Canvas to Facebook/Twitter", "image/png", blob, window.location.href);
-						}, { scope: " public_profile" });
+						}, { scope: "publish_actions" });
 					}
 					console.log("responce: ", response);
 				});
@@ -349,7 +349,7 @@
 				});
 			}
 
-		
+
 
 
 
