@@ -21,9 +21,10 @@
 			position: absolute;
 			right: 5px;
 			min-height: 300;
+			border-radius: 10px;
 			height: 200;
 			width: 300px;
-			border: 1px solid green !important;
+			border: 0px solid green !important;
 			overflow: hidden;
 			z-index: 50;
 			transition: right 1s;
@@ -87,6 +88,7 @@
 	<script src="./libs/other/OBJLoader.js"></script>
 	<script src="./libs/other/PLYLoader.js"></script>
 	<script src="https://code.jquery.com/jquery-2.1.0.min.js"></script>
+	<script src="../libs/Cesium/Cesium.js"></script>
 
 	<div class="potree_container" style="position: absolute; width: 100%; height: 100%; left: 0px; top: 0px; ">
 		<div id="potree_render_area"></div>
@@ -127,11 +129,11 @@
 				 class="fb-xfbml-parse-ignore">გაზიარება</a></div>
 
 			<div id="current_image">
-				<img id='tree_image' src='resources/images/ee.jpg' alt='image' width="auto" height="180" />
+				<img id='tree_image' src='resources/images/ee.png' alt='image' width="auto" height="180" />
 				<!-- <img id='my_image' src='resources/images/Facebook.png' alt='image' width="auto" height="40" onclick="publishOnFacebook(this) " />
 				<img id='my_image' src='resources/images/Twitter.png' alt='image' width="auto" height="40" onclick="twitt_click(this)" /> -->
-				<div id="Name" style="position: relative; width: 100%; height: 100%; left: 25px; top: -72px;"></div>
-				<div id="Date" style="position: relative; width: 100%; height: 100%; left: 220px; top: -134px;"></div>
+				<!-- <div id="Name" style="position: relative; width: 100%; height: 100%; left: 25px; top: -72px;"></div>
+				<div id="Date" style="position: relative; width: 100%; height: 100%; left: 220px; top: -134px;"></div> -->
 			</div>
 		</div>
 		<script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/0.4.1/html2canvas.min.js"></script>
@@ -147,6 +149,8 @@
 		</script>
 
 		<script>
+
+
 			this.readJSON("build/data.json");// initilze trees
 
 			var json_string;
@@ -163,7 +167,6 @@
 
 				for (let i = 0; i < pin_objects.length; i++) { // todo: dictionary 
 					if (search_word == "test") {
-
 
 						this.go_to_tree(pin_objects[i]);
 
@@ -196,7 +199,7 @@
 
 			function go_to_tree(tree_obj) {// _goder
 
-				this.screenshot();
+				//this.screenshot();
 
 				let final_postion = tree_obj.mesh_obj.position;
 				pin_image.style.right = "0px";
@@ -205,12 +208,9 @@
 				person_name.innerHTML = tree_obj.person_name;
 				plant_date.innerHTML = tree_obj.plant_date;
 
-
 				var v_pos = viewer.scene.view.position;
 				var postion_diff = new THREE.Vector3(Math.abs(final_postion["x"] - v_pos.x),
 					Math.abs(final_postion["y"] - v_pos.y), Math.abs(final_postion["z"] - v_pos.z));
-
-
 
 				var magnitude = Math.sqrt(postion_diff.x * postion_diff.x +
 					postion_diff.y * postion_diff.y + postion_diff.z * postion_diff.z);
@@ -221,35 +221,18 @@
 					final_postion["z"] + postion_diff.z / magnitude * multipler);
 				viewer.scene.view.position = zoom_positon;
 
+
+
+				console.log(viewer.scene.cameraO);
+
+				viewer.scene.cameraP.lookAt(zoom_positon);
+				//				viewer.scene.view.lookAt(.position);
+
 			}
 
 			var image_url;
 
-			var publish = {
-				method: 'share',
-				message: 'Learning about Facebook Platform',
-				name: 'Operation Developer Love',
-				caption: 'The Facebook Connect JavaScript SDK',
-				description: (
-					'A small JavaScript library that allows you to harness ' +
-					'the power of Facebook, bringing the user\'s identity, ' +
-					'social graph and distribution power to your site.'
-				),
-				href: 'http://fbrell.com/',
-				image: 'http://fbrell.com/f8.jpg',
-				actions: [
-					{ name: 'fbrell', link: 'http://fbrell.com/' }
-				],
-
-				user_message_prompt: 'Share your thoughts about RELL'
-			};
-
-
 			function screenshot() { // take shortcut
-
-
-				console.log("screenshot1");
-
 				html2canvas(document.querySelector("#pin_image"), {
 					onrendered: function (canvas) {
 						let pngUrl = canvas.toDataURL();
@@ -257,88 +240,11 @@
 						img.src = pngUrl;
 						image_url = pngUrl;
 						let image = convertURIToImageData(pngUrl);
-
-
 						document.getElementById("tree_image").src = pngUrl;
-
-
-
-
-						FB.ui({
-							method: 'share',
-							action_type: 'og.shares',
-							action_properties: JSON.stringify({
-								object: {
-									'og:url': 'http://fbrell.com/',
-									'og:title': 'title',
-									'og:description': 'description',
-									'og:image:width': '390',
-									'og:image:height': '366',
-									'og:image': 'http://fbrell.com/f8.jpg'
-								}
-							})
-
-						},
-							function (response) {
-								if (response && !response.error_message) {
-									alert('Posting completed.');
-								} else {
-									alert('Error while posting.');
-								}
-							}
-						);
-
-
-
-						// FB.ui(publish, function (response) {
-						// 	if (response && !response.error_message) {
-						// 		alert('Posting completed.');
-						// 	} else {
-						// 		alert('Error while posting.');
-						// 	}
-						// });
-						//	post_on_fb(pngUrl);
-						//fbs_click(image_url);
-
-						console.log("image : ", pngUrl);
-						//ავტვირთოთ ბაზაზე და ისე გავაზიაროთ? ფეისბუქი მარტო ლინკს იღებს
 					},
 				});
 				return image_url;
 			}
-
-
-
-
-
-
-
-
-
-
-			function post_on_fb(data) {
-				try {
-					blob = dataURItoBlob(data);
-					console.log("blob: ", blob);
-				} catch (e) {
-					console.log(e);
-				}
-				FB.getLoginStatus(function (response) {
-					if (response.status === "connected") {
-						postImageToFacebook(response.authResponse.accessToken, "Canvas to Facebook/Twitter", "image/png", blob, window.location.href);
-					} else if (response.status === "not_authorized") {
-						FB.login(function (response) {
-							postImageToFacebook(response.authResponse.accessToken, "Canvas to Facebook/Twitter", "image/png", blob, window.location.href);
-						}, { scope: "publish_actions" });
-					} else {
-						FB.login(function (response) {
-							postImageToFacebook(response.authResponse.accessToken, "Canvas to Facebook/Twitter", "image/png", blob, window.location.href);
-						}, { scope: "publish_actions" });
-					}
-					console.log("responce: ", response);
-				});
-			};
-
 
 			function dataURItoBlob(dataURI) {
 				var byteString = atob(dataURI.split(',')[1]);
@@ -350,97 +256,7 @@
 				return new Blob([ab], { type: 'image/png' });
 			}
 
-
-
-
-
-
-			function postImageToFacebook(token, filename, mimeType, imageData, message) {
-				var fd = new FormData();
-				fd.append("access_token", token);
-				fd.append("source", imageData);
-				fd.append("no_story", true);
-
-				// Upload image to facebook without story(post to feed)
-				$.ajax({
-					url: "https://graph.facebook.com/me/photos?access_token=" + token,
-					type: "POST",
-					data: fd,
-					processData: false,
-					contentType: false,
-					cache: false,
-					success: function (data) {
-						console.log("success: ", data);
-
-						// Get image source url
-						FB.api(
-							"/" + data.id + "?fields=images",
-							function (response) {
-								if (response && !response.error) {
-									//console.log(response.images[0].source);
-
-									// Create facebook post using image
-									FB.api(
-										"/me/feed",
-										"POST",
-										{
-											"message": "",
-											"picture": response.images[0].source,
-											"link": window.location.href,
-											"name": 'Look at the cute panda!',
-											"description": message,
-											"privacy": {
-												value: 'SELF'
-											}
-										},
-										function (response) {
-											if (response && !response.error) {
-												/* handle the result */
-												console.log("Posted story to facebook");
-												console.log(response);
-											}
-										}
-									);
-								}
-							}
-						);
-					},
-					error: function (shr, status, data) {
-						console.log("error " + data + " Status " + shr.status);
-					},
-					complete: function (data) {
-						//console.log('Post to facebook Complete');
-					}
-				});
-			}
-
-
-
-
-
 			pin_image.style.right = "-302px";
-
-
-
-			function publishOnFacebook(share_image) {
-				FB.ui(
-					{
-						method: 'feed',
-						name: 'Facebook Dialogs',
-						link: 'http://localhost/',
-						picture: "https://en.wikipedia.org/wiki/Tree#/media/File:Ash_Tree_-_geograph.org.uk_-_590710.jpg",
-						caption: 'Reference Documentation',
-						description: 'Dialogs provide a simple, consistent interface for applications to interface with users.'
-					},
-					function (response) {
-						if (response && response.post_id) {
-							alert('Post was published.');
-						} else {
-							alert('Post was not published.');
-						}
-					}
-				);
-			}
 
 
 			function convertURIToImageData(URI) {
@@ -567,56 +383,82 @@
 					console.log(item, loaded, total);
 				};
 
-				let texture = textureLoader.load('./resources/textures/brick_pavement.jpg');
+				let plane_texture = textureLoader.load('./resources/textures/PamTexture.png');
+				let pin_texture = textureLoader.load('./resources/textures/brick_pavement 12.png');
+
 				let onProgress = function (xhr) {
 					if (xhr.lengthComputable) {
 						let percentComplete = xhr.loaded / xhr.total * 100;
 						console.log(Math.round(percentComplete, 2) + '% downloaded');
 					}
 				};
-				texture.wrapS = THREE.RepeatWrapping;
-				texture.wrapT = THREE.RepeatWrapping;
+				plane_texture.wrapS = THREE.RepeatWrapping;
+				plane_texture.wrapT = THREE.RepeatWrapping;
+
+				pin_texture.wrapS = THREE.RepeatWrapping;
+				pin_texture.wrapT = THREE.RepeatWrapping;
 
 
 				let onError = function (xhr) { };
 				let loader = new THREE.OBJLoader(manager);
 
 
-				loader.load('./resources/models/XE.obj', function (loaded_mesh) {
 
-					console.log(json_string);
-					loaded_mesh.traverse(function (child) {
+				loader.load('./resources/models/maptile.obj', function (loaded_map) {
+					loaded_map.traverse(function (child) {
 						if (child instanceof THREE.Mesh) {
-							child.material.map = texture;
+							child.material.map = plane_texture;
 						}
 					});
 
 
-					for (let j = 0; j < 1; j++) {
+					loaded_map.position.set(
+						589742.5396259155, 231513.74975000002, 723.1750000762939
+					);
 
-						for (let i = 0; i < json_string.length; i++) {
-							let obj = loaded_mesh.clone(true);
-							obj.children[0].name = json_string[i].object_id;
 
-							if (i === 0) {
-								var pin = new pin_object("id:" + i, "person name1", "11/16/2018", "person email", "picture", obj);
-								console.log("print1: ", pin);
+					loaded_map.scale.multiplyScalar(200);
+					loaded_map.rotation.set(Math.PI / 2, Math.PI, 0)
+					viewer.scene.scene.add(loaded_map);
+				});
 
-							} else {
-								var pin = new pin_object(json_string[i].object_id, json_string[i].person_name,
-									json_string[i].plant_date, json_string[i].person_email, json_string[i].pin_picture,
-									obj);
-								console.log("print: ", pin);
-							}
-							pin_objects.push(pin);
 
-							obj.position.set(589999.587 + j * 20, 231557.213 - i * 10, 745.614 + i);
-							obj.scale.multiplyScalar(500);
-							obj.rotation.set(Math.PI / 2, Math.PI, 0)
-							viewer.scene.scene.add(obj);
+				loader.load('./resources/models/XE.obj', function (loaded_mesh) {
+					loaded_mesh.traverse(function (child) {
+						if (child instanceof THREE.Mesh) {
+							child.material.map = pin_texture;
 						}
+					});
 
+
+
+					for (let i = 0; i < json_string.length; i++) {
+
+
+						let obj = loaded_mesh.clone(true);
+
+
+						obj.children[0].name = json_string[i].object_id;
+
+
+						var pin = new pin_object(json_string[i].object_id, json_string[i].person_name,
+							json_string[i].plant_date, json_string[i].person_email, json_string[i].pin_picture,
+							obj);
+
+						obj.position.set(
+							json_string[i].obj_pos[0],
+							json_string[i].obj_pos[1],
+							json_string[i].obj_pos[2]
+						);
+
+						pin_objects.push(pin);
+						obj.scale.multiplyScalar(500);
+						obj.rotation.set(Math.PI / 2, Math.PI, 0)
+						viewer.scene.scene.add(obj);
 					}
+
+
+
 					// loaded_mesh.traverse( function ( child ) {
 
 					// 	   if ( child instanceof THREE.Mesh ) {

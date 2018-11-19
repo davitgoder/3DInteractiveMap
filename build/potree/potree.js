@@ -1310,6 +1310,7 @@
 						e.viewer.scene.pointclouds,
 						{ pickClipped: true });
 
+
 					if (I) {
 						let i = this.spheres.indexOf(e.drag.object);
 						if (i !== -1) {
@@ -1839,6 +1840,7 @@
 		KDTREE: 1
 	};
 
+
 	class Utils {
 		static async loadShapefileFeatures(file, callback) {
 			let features = [];
@@ -2170,6 +2172,7 @@
 			return texture;
 		}
 
+
 		static getMousePointCloudIntersection(mouse, camera, viewer, pointclouds, params = {}) {
 
 			let renderer = viewer.renderer;
@@ -2202,7 +2205,14 @@
 			for (let pointcloud of pointclouds) {
 				let point = pointcloud.pick(viewer, camera, ray, pickParams);
 
+
+
+				//_goder
+
+
 				if (!point) {
+
+
 					continue;
 				}
 
@@ -2215,6 +2225,10 @@
 					closestPoint = point;
 				}
 			}
+
+
+
+
 
 			if (selectedPointcloud) {
 				return {
@@ -15485,7 +15499,8 @@ void main() {
 				viewer.skybox.camera.aspect = viewer.scene.cameraP.aspect;
 				viewer.skybox.camera.updateProjectionMatrix();
 				viewer.renderer.render(viewer.skybox.scene, viewer.skybox.camera);
-			} else if (viewer.background === "gradient") {
+			}
+			else if (viewer.background === "gradient") {
 				viewer.renderer.clear(true, true, false);
 				viewer.renderer.render(viewer.scene.sceneBG, viewer.scene.cameraBG);
 			} else if (viewer.background === "black") {
@@ -16132,7 +16147,7 @@ void main() {
 	 *
 	 */
 
-
+	var json_points = [];
 	class OrbitControls extends EventDispatcher {
 
 		constructor(viewer) {
@@ -16274,6 +16289,7 @@ void main() {
 		}
 
 		//_goder // eventis aweva pin_object istvis
+
 		zoomToLocation(mouse) {
 
 			let camera = this.scene.getActiveCamera();
@@ -16324,7 +16340,12 @@ void main() {
 				let targetPos = cameraTargetPosition.clone();
 				let startRadius = this.scene.view.radius;
 				let targetRadius = cameraTargetPosition.distanceTo(I.location);
-console.log(I.location);
+
+
+				json_points.push([I.location.x, I.location.y, I.location.z]);
+
+				console.log(json_points); //_Ogoder
+
 				tween.onUpdate(() => {
 					let t = value.x;
 					this.scene.view.position.x = (1 - t) * startPos.x + t * targetPos.x;
@@ -16567,7 +16588,7 @@ console.log(I.location);
 			this.cameraP = new THREE.PerspectiveCamera(this.fov, 1, 0.1, 1000 * 1000);
 			this.cameraO = new THREE.OrthographicCamera(-1, 1, 1, -1, 0.1, 1000 * 1000);
 			this.cameraBG = new THREE.Camera();
-			this.cameraScreenSpace = new THREE.OrthographicCamera(-1, 1, 1, -1, 0.1, 10);
+			this.cameraScreenSpace = new THREE.OrthographicCamera(-1, 1, 1, -1, 0.1, 10 * 100);
 			this.cameraMode = CameraMode.PERSPECTIVE;
 			this.pointclouds = [];
 
@@ -21955,6 +21976,7 @@ ENDSEC
 
 
 			let onPointCloudAdded = (e) => {
+
 				let pointcloud = e.pointcloud;
 				let cloudIcon = `${Potree.resourcePath}/icons/cloud.svg`;
 				let node = createNode(pcID, pointcloud.name, cloudIcon, pointcloud);
@@ -23295,6 +23317,11 @@ ENDSEC
 		getHoveredElements() {
 
 
+
+
+
+
+
 			let cam = this.viewer.scene.getActiveCamera();
 
 			//let image_toggle = false, mouse_down_detector = false; // image apperance constroll
@@ -23370,6 +23397,9 @@ ENDSEC
 		on_click() {
 			if (mouse_down_detector)
 				if (hovered_object != null) {
+
+					//console.log("height ", this.viewer.scene.estimateHeightAt(new THREE.Vector3(589999.587, 231557.213, 745.614)));
+
 					//this.zoom_to_pin(hovered_object.point);
 
 					let clicked_object_id = hovered_object.object.name; // this is mesh object name
@@ -23383,14 +23413,29 @@ ENDSEC
 								pin_image.style.right = "-302px";
 								let person_name = document.getElementById("Name");
 								let plant_date = document.getElementById("Date");
-								person_name.innerHTML = pin_objects[i].person_name;
-								plant_date.innerHTML = pin_objects[i].plant_date;
+							//	person_name.innerHTML = pin_objects[i].person_name;
+							//	plant_date.innerHTML = pin_objects[i].plant_date;
+
+
+								
+
+								// var cam =  this.scene.getActiveCamera();
+								// console.log("cam: ",cam);
+								// console.log("viwer: ",this.viewer);
+
+								// pin_objects[i].mesh_obj.lookAt(new THREE.Vector3(1,1,1));
+								// this.viewer.scene.lookAt(pin_objects[i].mesh_obj);
+
+							
+
+
 							}
 							else {
 								pin_image.style.right = "0px";
 							}
 
 						}
+
 					}
 
 
@@ -24310,6 +24355,7 @@ ENDSEC
 			let easing = TWEEN.Easing.Quartic.Out;
 
 			{ // animate camera position
+
 				let pos = startPosition.clone();
 				let tween = new TWEEN.Tween(pos).to(endPosition, animationDuration);
 				tween.easing(easing);
