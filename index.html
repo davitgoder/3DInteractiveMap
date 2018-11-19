@@ -32,7 +32,7 @@
 
 			#seachrbar {
 			position: absolute;	
-			border: 0px solid green !important;
+			border: 0px solid white !important;
 			overflow: hidden;
 			z-index: 50;
 			transition: right 1s;
@@ -121,6 +121,7 @@
 
 		<div id="seachrbar" , class="searchbar">
 			<input id="input" onkeyup="search_tree()" type="text" name="search" placeholder="Search..">
+			<!-- <img id='my_image' src='resources/images/Facebook.png' alt='image' width="auto" height="40" img/> -->
 		</div>
 
 		<div id="pin_image" , class="shcreensh">
@@ -205,8 +206,8 @@
 				pin_image.style.right = "0px";
 				let person_name = document.getElementById("Name");
 				let plant_date = document.getElementById("Date");
-				person_name.innerHTML = tree_obj.person_name;
-				plant_date.innerHTML = tree_obj.plant_date;
+			//	person_name.innerHTML = tree_obj.person_name;
+			//	plant_date.innerHTML = tree_obj.plant_date;
 
 				var v_pos = viewer.scene.view.position;
 				var postion_diff = new THREE.Vector3(Math.abs(final_postion["x"] - v_pos.x),
@@ -225,7 +226,7 @@
 
 				console.log(viewer.scene.cameraO);
 
-				viewer.scene.cameraP.lookAt(zoom_positon);
+				//viewer.scene.cameraP.lookAt(zoom_positon);
 				//				viewer.scene.view.lookAt(.position);
 
 			}
