@@ -23327,6 +23327,9 @@ ENDSEC
 			//let image_toggle = false, mouse_down_detector = false; // image apperance constroll
 			document.addEventListener('mousedown', (event) => {
 				mouse_down_detector = true;
+				if (pin_image.style.right == "0px") {
+					pin_image.style.right = "-302px";
+				}
 			});
 
 
@@ -23334,6 +23337,8 @@ ENDSEC
 				//on click is called that checks if mouse_down_detector is true, this assures that function will be called only once
 				//TODO: romove this after cklick system is corrected
 				this.on_click();
+
+				
 				mouse_down_detector = false;
 			});
 
@@ -23415,7 +23420,7 @@ ENDSEC
 								let plant_date = document.getElementById("Date");
 
 
-								
+
 								console.log("123423454536");
 
 								// pin_objects[i].mesh_obj.position.set(
@@ -23446,11 +23451,11 @@ ENDSEC
 
 							}
 							else {
-							console.log("swdfdvgfgrthhrgywrhyn");
+								console.log("swdfdvgfgrthhrgywrhyn");
 								pin_image.style.right = "0px";
 							}
 
-							console.log(pin_was_hovered );
+							console.log(pin_image.style.right);
 						}
 
 					}
