@@ -120,8 +120,8 @@
 	<body>
 
 		<div id="seachrbar" , class="searchbar">
-			<input id="input" onkeyup="search_tree()" type="text" name="search" placeholder="Search..">
-			<!-- <img id='my_image' src='resources/images/Facebook.png' alt='image' width="auto" height="40" img/> -->
+			
+			<input id="input" onkeyup="search_tree()" type="text" name="search" placeholder="Search.."  >
 		</div>
 
 		<div id="pin_image" , class="shcreensh">
@@ -203,6 +203,7 @@
 				//this.screenshot();
 
 				let final_postion = tree_obj.mesh_obj.position;
+				pin_image.style.right = "-302px";
 				pin_image.style.right = "0px";
 				let person_name = document.getElementById("Name");
 				let plant_date = document.getElementById("Date");
@@ -387,7 +388,7 @@
 					console.log(item, loaded, total);
 				};
 
-				let plane_texture = textureLoader.load('./resources/textures/PamTexture1.png');
+				//let plane_texture = textureLoader.load('./resources/textures/PamTexture1.png');
 				let pin_texture = textureLoader.load('./resources/textures/brick_pavement 12.png');
 
 				let onProgress = function (xhr) {
@@ -396,8 +397,8 @@
 						console.log(Math.round(percentComplete, 2) + '% downloaded');
 					}
 				};
-				plane_texture.wrapS = THREE.RepeatWrapping;
-				plane_texture.wrapT = THREE.RepeatWrapping;
+				//plane_texture.wrapS = THREE.RepeatWrapping;
+				//plane_texture.wrapT = THREE.RepeatWrapping;
 
 				pin_texture.wrapS = THREE.RepeatWrapping;
 				pin_texture.wrapT = THREE.RepeatWrapping;
@@ -408,23 +409,23 @@
 
 
 
-				loader.load('./resources/models/maptile.obj', function (loaded_map) {
-					loaded_map.traverse(function (child) {
-						if (child instanceof THREE.Mesh) {
-							child.material.map = plane_texture;
-						}
-					});
+				// loader.load('./resources/models/maptile.obj', function (loaded_map) {
+				// 	loaded_map.traverse(function (child) {
+				// 		if (child instanceof THREE.Mesh) {
+				// 			child.material.map = plane_texture;
+				// 		}
+				// 	});
 
 
-					loaded_map.position.set(
-						589742.5396259155, 231513.74975000002, 723.1750000762939
-					);
+				// 	loaded_map.position.set(
+				// 		589742.5396259155, 231513.74975000002, 723.1750000762939
+				// 	);
 
 
-					loaded_map.scale.multiplyScalar(200);
-					loaded_map.rotation.set(Math.PI / 2, Math.PI, 0)
-					viewer.scene.scene.add(loaded_map);
-				});
+				// 	loaded_map.scale.multiplyScalar(200);
+				// 	loaded_map.rotation.set(Math.PI / 2, Math.PI, 0)
+				// 	viewer.scene.scene.add(loaded_map);
+				// });
 
 
 				loader.load('./resources/models/XE.obj', function (loaded_mesh) {

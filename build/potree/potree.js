@@ -23413,11 +23413,26 @@ ENDSEC
 								pin_image.style.right = "-302px";
 								let person_name = document.getElementById("Name");
 								let plant_date = document.getElementById("Date");
-							//	person_name.innerHTML = pin_objects[i].person_name;
-							//	plant_date.innerHTML = pin_objects[i].plant_date;
 
 
 								
+								console.log("123423454536");
+
+								// pin_objects[i].mesh_obj.position.set(
+								// 	pin_objects[i].mesh_obj.position.x,
+								// 	pin_objects[i].mesh_obj.position.y,
+								// 	pin_objects[i].mesh_obj.position.z
+								// );
+								// console.log(pin_objects[i].mesh_obj);
+
+								// pin_objects[i].mesh_obj.visible =
+								// console.log(pin_objects[i].mesh_obj);
+
+								//	person_name.innerHTML = pin_objects[i].person_name;
+								//	plant_date.innerHTML = pin_objects[i].plant_date;
+
+
+
 
 								// var cam =  this.scene.getActiveCamera();
 								// console.log("cam: ",cam);
@@ -23426,14 +23441,16 @@ ENDSEC
 								// pin_objects[i].mesh_obj.lookAt(new THREE.Vector3(1,1,1));
 								// this.viewer.scene.lookAt(pin_objects[i].mesh_obj);
 
-							
+
 
 
 							}
 							else {
+							console.log("swdfdvgfgrthhrgywrhyn");
 								pin_image.style.right = "0px";
 							}
 
+							console.log(pin_was_hovered );
 						}
 
 					}
@@ -23543,7 +23560,7 @@ ENDSEC
 	}
 
 
-	var mouse_down_detector, hovered_object, pin_was_hovered = false;
+	var mouse_down_detector, hovered_object, pin_was_hovered = false, pin_was_clicked = false;
 
 
 
@@ -23948,7 +23965,7 @@ ENDSEC
 					this.setShowBoundingBox(false);
 					this.setFreeze(false);
 					this.setNavigationMode(OrbitControls);
-					this.setBackground('gradient');
+					this.setBackground('skybox');
 
 					this.scaleFactor = 1;
 
