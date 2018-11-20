@@ -23421,7 +23421,7 @@ ENDSEC
 
 
 
-								console.log("123423454536");
+							
 
 								// pin_objects[i].mesh_obj.position.set(
 								// 	pin_objects[i].mesh_obj.position.x,
@@ -23451,7 +23451,7 @@ ENDSEC
 
 							}
 							else {
-								console.log("swdfdvgfgrthhrgywrhyn");
+							
 								pin_image.style.right = "0px";
 							}
 
