@@ -23446,9 +23446,6 @@ ENDSEC
 								// pin_objects[i].mesh_obj.lookAt(new THREE.Vector3(1,1,1));
 								// this.viewer.scene.lookAt(pin_objects[i].mesh_obj);
 
-
-
-
 							}
 							else {
 							

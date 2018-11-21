@@ -120,8 +120,8 @@
 	<body>
 
 		<div id="seachrbar" , class="searchbar">
-			
-			<input id="input" onkeyup="search_tree()" type="text" name="search" placeholder="Search.."  >
+
+			<input id="input" onkeyup="search_tree()" type="text" name="search" placeholder="Search..">
 		</div>
 
 		<div id="pin_image" , class="shcreensh">
@@ -389,6 +389,8 @@
 				};
 
 				//let plane_texture = textureLoader.load('./resources/textures/PamTexture1.png');
+				let soil_texture = textureLoader.load('./resources/textures/soil1.jpg');
+
 				let pin_texture = textureLoader.load('./resources/textures/brick_pavement 12.png');
 
 				let onProgress = function (xhr) {
@@ -400,12 +402,45 @@
 				//plane_texture.wrapS = THREE.RepeatWrapping;
 				//plane_texture.wrapT = THREE.RepeatWrapping;
 
+
+				soil_texture.wrapS = THREE.RepeatWrapping;
+				soil_texture.wrapT = THREE.RepeatWrapping;
+
 				pin_texture.wrapS = THREE.RepeatWrapping;
 				pin_texture.wrapT = THREE.RepeatWrapping;
 
 
+
 				let onError = function (xhr) { };
 				let loader = new THREE.OBJLoader(manager);
+
+
+				loader.load('./resources/models/soil.obj', function (soil_model) {
+					soil_model.traverse(function (child) {
+						if (child instanceof THREE.Mesh) {
+							child.material.map = soil_texture;
+						}
+					});
+
+
+					soil_model.position.set(
+						589742.5396259155, 231513.74975000002, 723.1750000762939
+					);
+
+
+					soil_model.scale.multiplyScalar(200);
+					soil_model.rotation.set(Math.PI / 2, Math.PI, 0)
+					viewer.scene.scene.add(soil_model);
+				});
+
+
+
+
+
+
+
+
+
 
 
 
